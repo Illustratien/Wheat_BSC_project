@@ -38,3 +38,7 @@ str(lo[1])
 str(lo[[1]])
 # [[]] gibt en inhalt wieder, anderer data typ als [] der als liste wiedergegeben wird
 
+
+# df$time %>% str()
+df %>% dplyr::filter(time=='2023-04-17') %>% .$temp
+df %>% dplyr::filter(time==as.Date('2023-04-17')) %>% .$temp
