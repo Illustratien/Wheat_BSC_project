@@ -144,7 +144,7 @@ sample_data <- data.frame(name = c("Geek1","Geek2",
 
 # Load ggplot2 package
 library("ggplot2") 
-
+library(dplyr)
 # Create bar plot using ggplot() function
 ggplot(sample_data,
        aes(name,value,, color=name)) + 
@@ -160,13 +160,13 @@ ggplot(sample_data,
 
 
 
-data %>% 
-  ggplot(aes(x=date,y=weight,color=var))+
-  geom_point()+
-  geom_line(aes(group=group))+ # link the point by group.
-  xlab("date of harvest")+ #x axis title
-  ylab("ear weight(g)") +  #y axis title
-  guides(color=guide_legend(title="Cultivar"))+ #change legend title 
-theme(axis.text.x = element_text(angle = 90)) +
-  
-
+phenology %>% 
+  ggplot(.,aes(x=var,y=value, colour=var))+
+  geom_boxplot()+
+  facet_grid(Year~stage)+
+theme(axis.text.x = element_text(angle = 90))+
+  theme(axis.text.x = element_text(vjust=-0,3))+ 
+xlab("Cultivar")+
+  ylab("Thermal time (C°d)")+
+  guides(color=guide_legend(title="Cultivar")) +
+ ggtitle("Phenological Phases")
