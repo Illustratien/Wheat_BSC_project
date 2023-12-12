@@ -82,3 +82,27 @@ df %>% with(.,.[x1==2|x3=="2c"])#false true ture, falsee ist hier x1
 # specify the rows
 df %>% with(.,.[x1==2|x3=="2c",])
 df
+
+df <- expand.grid(x=letters[1:4],
+                  y=1:2)%>%
+  # combine columns x and y 
+  mutate(z=interaction(x,y))#similiar to paste()
+rownames(df) <- LETTERS[1:nrow(df)]
+df
+
+df %>% mutate(k=ifelse(x=="a","A","B"))
+df %>% mutate(k=ifelse(y==1,"A","B"))
+df %>% mutate(k=case_when(x=="a"~"A",
+                          TRUE~"B"))
+#ture false adding column for checking
+
+df %>% mutate(k=ifelse(x=="a" & y==1,"True","False"))
+df %>% mutate(k=case_when(x=="a"~"A",
+                          x=="b"~"B",
+                          TRUE~"C"))
+look_table <- data.frame(x=letters,
+                         X=LETTERS)
+df %>% merge(look_table)
+look_table
+colnames(look_table
+        )
