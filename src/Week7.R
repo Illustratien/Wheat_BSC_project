@@ -107,3 +107,66 @@ phenology %>%
   ggplot(.,aes(x=var,y=value))+
   geom_boxplot()+
   facet_grid(Year~stage)
+
+
+# verschieben vertikal des axen textes ------------------------------------
+
+
+# Create sample data
+set.seed(5642)							 
+sample_data <- data.frame(name = c("Geek1","Geek2",
+                                   "Geek3","Geek4",
+                                   "Geeek5") ,
+                          value = c(31,12,15,28,45)) 
+
+# Load ggplot2 package
+library("ggplot2") 
+
+# Create bar plot using ggplot() function
+ggplot(sample_data,
+       aes(name,value,, color=name)) + 
+  
+  # geom_bar function is used to plot bars 
+  # of barplot
+  geom_bar(stat = "identity", fill="white")+
+  
+  # vjust is used to justify the label vertically
+  theme(axis.text.x = element_text(vjust=-5)) 
+################################################################### Create sample data
+set.seed(5642)							 
+sample_data <- data.frame(name = c("Geek1","Geek2",
+                                   "Geek3","Geek4",
+                                   "Geeek5") ,
+                          value = c(31,12,15,28,45)) 
+
+# rotieren des axen textes ------------------------------------------------
+
+
+# Load ggplot2 package
+library("ggplot2") 
+library(dplyr)
+# Create bar plot using ggplot() function
+ggplot(sample_data,
+       aes(name,value,, color=name)) + 
+  
+  # geom_bar function is used to plot bars 
+  # of barplot
+ geom_bar(stat = "identity", fill="white")+
+  
+  # rotate axis label using axis.text.x parameter
+  # of theme() 90 degree rotation makes label 
+  # vertical
+  theme(axis.text.x = element_text(angle = 90)) 
+
+
+
+phenology %>% 
+  ggplot(.,aes(x=var,y=value, colour=var))+
+  geom_boxplot()+
+  facet_grid(Year~stage)+
+theme(axis.text.x = element_text(angle = 90))+
+  theme(axis.text.x = element_text(vjust=-0,3))+ 
+xlab("Cultivar")+
+  ylab("Thermal time (C°d)")+
+  guides(color=guide_legend(title="Cultivar")) +
+ ggtitle("Phenological Phases")
