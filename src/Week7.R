@@ -143,7 +143,7 @@ sample_data <- data.frame(name = c("Geek1","Geek2",
 
 
 # Load ggplot2 package
-library("ggplot2") 
+library(ggplot2) 
 library(dplyr)
 # Create bar plot using ggplot() function
 ggplot(sample_data,
@@ -165,7 +165,7 @@ phenology %>%
   geom_boxplot()+
   facet_grid(Year~stage)+
 theme(axis.text.x = element_text(angle = 90))+
-  theme(axis.text.x = element_text(vjust=-0,3))+ 
+  theme(axis.text.x = element_text(vjust=-0,2))+ 
 xlab("Cultivar")+
   ylab("Thermal time (C°d)")+
   guides(color=guide_legend(title="Cultivar")) +

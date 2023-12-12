@@ -41,4 +41,10 @@ str(2023-04-17)
 str(vec)
 "2023-04-17"==df[,1]
 df["2023-04-17"==df[,1],2]
-#[reihe,zeile]
+#[reihe=row,zeile=column]
+df[,2]
+df
+names(df)
+## um die daten der liste/ einen einzigen wert herauszufinden, benutze das untere
+##df[2,2]
+##df$"b"[2]
