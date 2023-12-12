@@ -30,7 +30,7 @@ lapply(df, range) %>% data.frame()
 
 summary(df)
 
-# df$time %>% str()
+# df$time %>% str() content of a column= searching for row
 df %>% dplyr::filter(time=='2023-04-17') %>% .$temp
 df %>% dplyr::filter(time==as.Date('2023-04-17')) %>% .$temp
 #geht schneller
@@ -147,7 +147,7 @@ library(ggplot2)
 library(dplyr)
 # Create bar plot using ggplot() function
 ggplot(sample_data,
-       aes(name,value,, color=name)) + 
+       aes(name,value,, color=name)) 
   
   # geom_bar function is used to plot bars 
   # of barplot
@@ -170,3 +170,7 @@ xlab("Cultivar")+
   ylab("Thermal time (C°d)")+
   guides(color=guide_legend(title="Cultivar")) +
  ggtitle("Phenological Phases")
+
+
+phenology
+
