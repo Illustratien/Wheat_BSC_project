@@ -163,13 +163,14 @@ ggplot(sample_data,
 phenology %>% 
   ggplot(.,aes(x=var,y=value, colour=var))+
   geom_boxplot()+
-  facet_grid(Year~stage)+
+  geom_line(aes(group=group))+
+  facet_grid(DFG_year~sowing_date)+
 theme(axis.text.x = element_text(angle = 90))+
-  theme(axis.text.x = element_text(vjust=-0,2))+ 
-xlab("Cultivar")+
-  ylab("Thermal time (C°d)")+
-  guides(color=guide_legend(title="Cultivar")) +
- ggtitle("Phenological Phases")
+  theme(axis.text.x = element_text(vjust=-0,2))#+ 
+#xlab("Cultivar")+
+ # ylab("Thermal time (C°d)")+
+  #guides(color=guide_legend(title="Cultivar")) +
+ #ggtitle("Phenological Phases")
 
 
 phenology
