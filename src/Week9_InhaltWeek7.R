@@ -58,19 +58,51 @@ glimpse(data)
 climate<-data
 climate
 climate[c("DFG_year", "sowing_date", "DailyMean_Temperature","DayTime")]
-
+glimpse(data)
+install.packages("ggplot2")
 library(ggplot2)
 
-
+ new_climate<-data
+ new_climate%>%group_by(sowing_date,DFG_year)%>%
+   mutate(days_after_sowing=as.Date(DayTime,format("%Y-%m-%d")),
+          days_after_sowing= days_after_sowing-min(days_after_sowing),
+          day_after_sowing=as.numeric(days_after_sowing)
+                       ) %>%
+   ggplot(.)+
+   #geom_boxplot()+
+   geom_line(
+     aes(x=days_after_sowing,y=Acc_Temperature, colour=DFG_year,
+         group=interaction(sowing_date,DFG_year),
+         linetype=sowing_date),
+     linewidth=1)+
+   
+   
+   #facet_grid(DFG_year~sowing_date)+
+   theme_bw()+
+   theme(legend.position = c(.15,.1),
+         axis.text.x = element_text(angle = 90,vjust=0.2)
+   )+
+   xlab("Days after sowing")+
+   ylab("Thermal time (C°d)")
+ 
+   
+# climate -----------------------------------------------------------------
 climate %>% 
-  ggplot(.,aes(x=DayTime,y=Acc_Temperature, colour=DFG_year,group=interaction(sowing_date,DFG_year)))+
-  geom_boxplot()+
-  facet_grid(DFG_year~sowing_date)+
-  theme(axis.text.x = element_text(angle = 90))+
-  theme(axis.text.x = element_text(vjust=0.2))+ 
-  geom_line(aes(linetype=sowing_date),linewidth=0.5)+
+  ggplot(.)+
+  #geom_boxplot()+
+  geom_line(
+    aes(x=DayTime,y=Acc_Temperature, colour=DFG_year,
+               group=interaction(sowing_date,DFG_year),
+        linetype=sowing_date),
+    linewidth=0.5)+
+
+ 
+  #facet_grid(DFG_year~sowing_date)+
   theme_bw()+
-  theme(legend.position = c(.15,.1))+ xlab("Days after sowing")+
+  theme(legend.position = c(.15,.1),
+        axis.text.x = element_text(angle = 90,vjust=0.2)
+        )+
+  xlab("Days after sowing")+
   ylab("Thermal time (C°d)")
   
 climate %>% 
