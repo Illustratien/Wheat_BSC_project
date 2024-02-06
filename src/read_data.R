@@ -1,5 +1,6 @@
 rm(list=ls())
 pacman::p_load(ggplot2,deSolve,foreach,dplyr,ggpubr,scales,purrr)
+cv <- read.csv("data/cultivar_info.csv")
 
 df<- purrr::map_dfr(list.files("data_Eren/.xlsx"),~{
   batch <- .x%>% strsplit(.,"_") %>% unlist() %>% .[3] %>% gsub(".xlsx","",.)
@@ -38,4 +39,7 @@ df<- purrr::map_dfr(list.files("data_Eren/.xlsx"),~{
          type=case_when(type==1~"basal",
                         type==2~"central",
                         T~"apical")) %>% 
-  arrange(batch,plot_id,rep,spike,flower,floret.pos)
+  arrange(batch,plot_id,rep,spike,flower,floret.pos) %>% 
+  left_join(.,cv)
+
+write.csv(df,"data_Eren/merged_data.csv",row.names = F)
