@@ -13,13 +13,13 @@ df<- purrr::map_dfr(list.files("data_Eren/.xlsx"),~{
     
     file%>% 
       mutate(across(c(flower,small,spike,medium,large),as.character)) %>% 
-      select(var:total) %>% 
-      na.omit() %>% 
+      select(var:large) %>% 
       mutate(rep=sid,
              batch=batch %>% as.numeric())
     
   })
 }) %>%
+  filter(!is.na(flower)) %>% 
   mutate(flower_abort=case_when(flower%in%c("aborted","2-aborted")~2,
                                 flower=="1-aborted"~1,
                                 T~0),
@@ -28,13 +28,16 @@ df<- purrr::map_dfr(list.files("data_Eren/.xlsx"),~{
                           T~flower),
          across(small:large,~gsub("( |\\,$)","",.x)),
          across(small:large,~gsub("ß","0",.x)),
-         across(small:large,~gsub("\\.",",",.x)))%>% 
+         across(small:large,~gsub("\\.",",",.x)),
+         )%>% 
   tidyr::pivot_longer(small:large,
                       names_to = "kernel.type",
                       values_to = "floret.pos") %>% 
   tidyr::separate_rows(floret.pos, sep = ",") %>% 
+  group_by(batch,plot_id,rep,spike,flower) %>% 
+  mutate(total=length(which(floret.pos>0))) %>% 
   group_by(batch,plot_id,rep) %>% 
-  mutate(across(c(spike:total,floret.pos),as.numeric),
+  mutate(across(c(spike:flower_abort),as.numeric),
          type=cut(spike,3) %>% as.numeric(),
          type=case_when(type==1~"basal",
                         type==2~"central",
